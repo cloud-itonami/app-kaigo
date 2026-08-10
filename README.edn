@@ -1,4 +1,4 @@
 {:schema "etzhayyim.repository/v1"
- :name "com-etzhayyim-app-kaigo"
+ :name "app-kaigo"
  :kind :app
  :canonical-metadata :edn}
