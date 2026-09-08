@@ -9,7 +9,7 @@
   rolled `kg-*` CSS layer embedded via [:style], mirroring
   cloud-itonami.rare-earth.ui / cloud-itonami.public-malak.ui."
   (:require [appkit.core :as shape]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [cloud-itonami.app-kaigo.state :as state]))
 
 (def css-text
