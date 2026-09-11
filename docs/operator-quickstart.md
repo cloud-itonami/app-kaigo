@@ -28,7 +28,7 @@ macOS   darwin (arm64)
 npm install        # react / react-dom 18 のみ（package.json 参照）
 ```
 
-ビルドは `clojure -M:cljs` が担うので、npm 側は react / react-dom だけでよい。
+ビルドは `kbb -M:cljs` が担うので、npm 側は react / react-dom だけでよい。
 shadow-cljs の npm バイナリは使わない。
 
 > ⚠ `deps.edn` の appkit は `{:local/root "../../kotoba-lang/appkit"}`。
@@ -43,7 +43,7 @@ resource governor）。同時 1 本に制限する guard を通す:
 
 ```bash
 node /Users/junkawasaki/github/com-junkawasaki/scripts/resource-guard.mjs \
-  run build -- clojure -M:cljs -m shadow.cljs.devtools.cli compile app
+  run build -- kbb -M:cljs -m shadow.cljs.devtools.cli compile app
 ```
 
 **実測: exit 0 / `[:app] Build completed. (95 files, 2 compiled, 0 warnings, 7.00s)`**
@@ -83,7 +83,7 @@ cd web/dist && python3 -m http.server <port> &
 ### 5-A. ローカル開発（watch）
 
 ```bash
-clojure -M:cljs -m shadow.cljs.devtools.cli watch app
+kbb -M:cljs -m shadow.cljs.devtools.cli watch app
 # 別ターミナルで web/dist を serve、main.js が dev クライアント経由で再読込
 ```
 

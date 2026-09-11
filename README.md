@@ -66,7 +66,7 @@ Cloudflare Worker（XRPC を 3 本公開）から成る。
 
 ### 2. ビルドは通る。静的シェルは移行で改善したが、prerender は無い
 
-`clojure -M:cljs -m shadow.cljs.devtools.cli compile app` は exit 0
+`kbb -M:cljs -m shadow.cljs.devtools.cli compile app` は exit 0
 （[quickstart](docs/operator-quickstart.md) のとおり実測）。旧 SvelteKit の
 `build/index.html` は 1,203 バイトで `<title>` も meta description も
 入っていなかったが、移行後の `web/index.html`（= `web/dist/index.html` に
