@@ -38,7 +38,7 @@ shadow-cljs の npm バイナリは使わない。
 
 ### 2. コンパイルする — 約 7〜11 秒
 
-**この workspace では高負荷ビルドを直接起動しない**（superproject の CLAUDE.md、
+**この workspace では高負荷ビルドを直接起動しない**（superproject の AGENTS.md、
 resource governor）。同時 1 本に制限する guard を通す:
 
 ```bash

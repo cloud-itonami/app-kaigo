@@ -14,9 +14,9 @@ Cloudflare Worker（XRPC を 3 本公開）から成る。
 2 つの誤りが残っている**（支給限度額の表が 2 段ずれ／自己負担割合を要介護度から
 導いている）。
 
-設計の正本は **[`CLAUDE.md`](CLAUDE.md)** ということになっているが、**この README が
+設計の正本は **[`AGENTS.md`](AGENTS.md)** ということになっているが、**この README が
 書くのは *設計* ではなく「今この repo に何が在って、何が動くか」**である ——
-そして最初に言っておくべきこととして、**`CLAUDE.md` は出荷物とは別の製品を
+そして最初に言っておくべきこととして、**`AGENTS.md` は出荷物とは別の製品を
 記述している。**
 
 ## この repo に在るもの（18 ファイル）
@@ -34,23 +34,23 @@ Cloudflare Worker（XRPC を 3 本公開）から成る。
 | **`appview/kaigo-hp/src/app.ts`**（43 行 / 2.9 KB） | Cloudflare Worker。path-based DID を 7 個登録し、XRPC query を **3 本**公開（`getProduct` / `calcHousingReformBenefit` / `estimateCareCost`）。**永続化は一切しない** —— 3 本とも入力から即座に計算して返すだけ | **動かない**（`wrangler.jsonc` の `alias` が実在しないパスを指す。下記 §4） |
 | `appview/kaigo-hp/wrangler.jsonc`（5.7 KB） | Worker 設定。R2 2 本・Hyperdrive・service binding 4 本・Secrets Store 22 本を宣言するが、**`src/app.ts` はそのどれも参照しない** | — |
 | `appview/kaigo-hp/kotodama.jsonld` | actor 記述（`uiType: "landing"`）。**実態と一致している**唯一のメタデータ | — |
-| `CLAUDE.md` | 設計の正本 —— ただし別の製品のもの（下記 §1） | — |
+| `AGENTS.md` | 設計の正本 —— ただし別の製品のもの（下記 §1） | — |
 | `README.edn` / `migration.edn` / `NOTICE` | 機械可読な同定 / 切り出しの出所 / Apache-2.0 + Charter Rider（**`NOTICE` が参照する `CHARTER-RIDER.md` はこの repo に無い** —— 切り出し対象外） | — |
 
 ## 現在地（2026-08-18 実測）
 
-### 1. `CLAUDE.md` と出荷物は、別の製品である
+### 1. `AGENTS.md` と出荷物は、別の製品である
 
 これは細部のドリフトではない。**製品の前提そのものが逆を向いている。**
 
-| | `CLAUDE.md` が書く製品 | 実際に出荷されるページ |
+| | `AGENTS.md` が書く製品 | 実際に出荷されるページ |
 |---|---|---|
 | 立ち位置 | **「公的介護保険に依存しない」相互ケア** | **公的介護保険のナビゲーション**（支給限度額・住宅改修費給付・要介護認定フロー） |
 | モデル | 欠損モデルの否定 → 能力成長モデル（Well-Becoming） | 在宅介護ロボット 3 機種 + 保険の使い方 |
 | UI | `uiType: redirect`（**zero frontend**、Protocol Canvas card） | `uiType: landing`（603 行の SPA。`kotodama.jsonld` / `wrangler.jsonc` はこちらで正しい） |
 | 収益 | Tier 別 credit（mutual_care 120/mo など） | 月額プラン ¥9,800 / ¥29,800 / 要相談 |
 
-さらに `CLAUDE.md` が列挙する実装のうち、**この repo に存在しないもの**:
+さらに `AGENTS.md` が列挙する実装のうち、**この repo に存在しないもの**:
 
 - **9 個の command**（`cmd_collect_osm_care` / `cmd_collect_wam_facilities` /
   `search_facilities` / `create_care_record` …）—— 実装されている query は
@@ -61,7 +61,7 @@ Cloudflare Worker（XRPC を 3 本公開）から成る。
 - **データソース WAM NET / OpenStreetMap** と `care_facility` データモデル ——
   取得コードも保存先も無い。この repo は**外部データを 1 バイトも取得しない**。
 
-**`CLAUDE.md` を仕様として読まないこと。** 実際に動くものを読みたいなら
+**`AGENTS.md` を仕様として読まないこと。** 実際に動くものを読みたいなら
 `ui.cljs`（+ `state.cljs`）と `src/app.ts` しかない。
 
 ### 2. ビルドは通る。静的シェルは移行で改善したが、prerender は無い
@@ -90,7 +90,7 @@ Cloudflare Worker（XRPC を 3 本公開）から成る。
 `/signup` へのリクエストには同じシェルが返り、この SPA にはクライアント側
 ルータが無いので表示は変わらず、 signup ページは存在しない。**転換動線の入口が全部そこへ行く。**
 
-（この workspace は同じ失敗を一度踏んでいる —— superproject の CLAUDE.md が
+（この workspace は同じ失敗を一度踏んでいる —— superproject の AGENTS.md が
 記録する 2026-07-25 の kotobase.net signup funnel 404 事故。）
 
 ### 4. appview Worker は committed の状態では build できない —— blocker は 2 段
@@ -157,7 +157,7 @@ Cloudflare Worker（XRPC を 3 本公開）から成る。
 3. **prerender / SSR・OG を入れる**（2 が終わってから。旧 SvelteKit で `prerender = true` は
    実際に試して `/signup` 404 で build が止まっている）。
    マーケティング面に SSR/OG が要るのは superproject の ADR-2606290000。
-4. **`CLAUDE.md` を出荷物に合わせて書き直すか、`superseded` と明示する。**
+4. **`AGENTS.md` を出荷物に合わせて書き直すか、`superseded` と明示する。**
    現状は「読むと間違う文書」であって、無い方がまし。
 5. `wrangler.jsonc` の `alias` 8 本を、実在の依存（npm パッケージか
    `:local/root`）へ張り替える。
